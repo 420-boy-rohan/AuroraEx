@@ -17,6 +17,7 @@
             height: 100%;
             border: none;
         }
+        /* ঘড়ির স্টাইল */
         #clock {
             position: absolute;
             top: 10px;
@@ -48,7 +49,8 @@
                 const data = await response.json();
                 const serverTime = new Date(data.datetime).getTime();
                 const localTime = new Date().getTime();
-                serverTimeOffset = serverTime - localTime;
+                // অনলাইন সময়ের সাথে ১০০০ মিলি-সেকেন্ড (১ সেকেন্ড) যোগ করা হয়েছে
+                serverTimeOffset = (serverTime - localTime) + 1000;
             } catch (error) {
                 console.error("টাইম সিঙ্ক্রোনাইজেশনে সমস্যা হয়েছে:", error);
             }
@@ -65,6 +67,7 @@
         // প্রতি ১০ মিনিট পর পর সার্ভারের সাথে সময় পুনরায় সিঙ্ক করা
         setInterval(syncTime, 600000);
         
+        // শুরুতে একবার কল করা
         syncTime();
         updateClock();
     </script>
